@@ -6,7 +6,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
 
 @Entity
 public class Role {
@@ -14,14 +13,11 @@ public class Role {
 	@Id
 	@GeneratedValue
 	private Integer id;
-	
+
 	private String name;
-	
-	@ManyToMany
+
+	@ManyToMany(mappedBy = "roles")
 	private List<User> users;
-	
-	@OneToMany
-	private List<Blog> blogs;
 
 	public List<User> getUsers() {
 		return users;
