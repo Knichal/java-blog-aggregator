@@ -29,6 +29,7 @@
 						<label for="name" class="col-sm-2 control-label">Name:</label>
 						<div class="col-sm-10">
 							<form:input path="name" cssClass="form-control" />
+							<form:errors path="name"/>
 						</div>
 					</div>
 
@@ -36,6 +37,7 @@
 						<label for="name" class="col-sm-2 control-label">URL:</label>
 						<div class="col-sm-10">
 							<form:input path="url" cssClass="form-control" />
+							<form:errors path="url"/>
 						</div>
 					</div>
 
@@ -55,6 +57,11 @@
 <script type="text/javascript">
 $(document).ready(function(){
 	$('.nav-tabs a:first').tab('show');
+	$(".triggerRemove").click(function(e){
+		e.preventDefault();
+		$("#modalRemove.removeBtn").attr("href", $(this).attr("href"));
+		$("#modalRemove").modal();
+	});
 });
 </script>
 
@@ -75,6 +82,7 @@ $(document).ready(function(){
 			<p>
 			
 			<a href="<spring:url value="/blog/remove/${blog.id}.html" />" class="btn btn-danger triggerRemove">Remove blog</a>			
+			
 			${blog.url}</p>
 
 			<table class="table table-bordered table-hover table-striped">
@@ -98,4 +106,23 @@ $(document).ready(function(){
 
 	</c:forEach>
 
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="modalRemove" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Remove blog</h4>
+      </div>
+      <div class="modal-body">
+        Are you serious?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <a href="" class="btn btn-danger removeBtn">Remove</a>
+      </div>
+    </div>
+  </div>
 </div>
