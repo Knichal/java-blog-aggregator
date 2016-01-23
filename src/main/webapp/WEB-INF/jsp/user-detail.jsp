@@ -21,7 +21,7 @@
 						aria-label="Close">
 						<span aria-hidden="true">&times;</span>
 					</button>
-					<h4 class="modal-title" id="myModalLabel">Modal title</h4>
+					<h4 class="modal-title" id="myModalLabel">Adding new blog</h4>
 				</div>
 				<div class="modal-body">
 
@@ -42,34 +42,60 @@
 				</div>
 				<div class="modal-footer">
 					<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-					<input type="submit" class="btn btn-primary" value="Save"/>
+					<input type="submit" class="btn btn-primary" value="Save" />
 				</div>
 			</div>
 		</div>
 	</div>
 </form:form>
 
-<c:forEach items="${user.blogs}" var="blog">
+<br />
+<br />
 
-	<h1>${blog.name }</h1>
-	<p>${blog.url}</p>
+<script type="text/javascript">
+$(document).ready(function(){
+	$('.nav-tabs a:first').tab('show');
+});
+</script>
 
-	<table class="table table-bordered table-hover table-striped">
-		<thead>
-			<tr>
-				<th>Title</th>
-				<th>Link</th>
-			</tr>
-		</thead>
-		<tbody>
-			<c:forEach items="${blog.items}" var="item">
-				<tr>
-					<td>${item.title}</td>
-					<td>${item.link}</td>
+<!-- Nav tabs -->
+<ul class="nav nav-tabs">
+	<c:forEach items="${user.blogs}" var="blog">
+		<li><a href="#blog_${blog.id}" data-toggle="tab"><c:out
+					value="${blog.name}" /></a></li>
+	</c:forEach>
+</ul>
 
-				</tr>
-			</c:forEach>
-		</tbody>
-	</table>
+<!-- Tab panes -->
+<div class="tab-content">
+	<c:forEach items="${user.blogs}" var="blog">
 
-</c:forEach>
+		<div class="tab-pane" id="blog_${blog.id }">
+			<h1>${blog.name }</h1>
+			<p>
+			
+			<a href="<spring:url value="/blog/remove/${blog.id}.html" />" class="btn btn-danger triggerRemove">Remove blog</a>			
+			${blog.url}</p>
+
+			<table class="table table-bordered table-hover table-striped">
+				<thead>
+					<tr>
+						<th>Title</th>
+						<th>Link</th>
+					</tr>
+				</thead>
+				<tbody>
+					<c:forEach items="${blog.items}" var="item">
+						<tr>
+							<td>${item.title}</td>
+							<td>${item.link}</td>
+
+						</tr>
+					</c:forEach>
+				</tbody>
+			</table>
+		</div>
+
+	</c:forEach>
+
+</div>
