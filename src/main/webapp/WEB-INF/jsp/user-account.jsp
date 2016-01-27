@@ -1,16 +1,15 @@
-	<%@ page language="java" contentType="text/html; charset=UTF-8"
+ 	<%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 
 <%@ include file="../layout/taglib.jsp"%>
 
-<h1>${user.name}</h1>
 
 <!-- Button trigger modal -->
 <button type="button" class="btn btn-primary btn-lg" data-toggle="modal"
 	data-target="#myModal">Add new blog</button>
 
 
-<form:form commandName="blog" cssClass="form-horizontal">
+<form:form commandName="blog" cssClass="form-horizontal blogForm">
 	<!-- Modal -->
 	<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
 		aria-labelledby="myModalLabel">
@@ -62,6 +61,26 @@ $(document).ready(function(){
 		$("#modalRemove.removeBtn").attr("href", $(this).attr("href"));
 		$("#modalRemove").modal();
 	});
+	$(".blogForm").validate(
+			{
+				rules: {
+						name:{
+							required : true,
+							minlength : 1
+						},
+						url:{
+							required : true,
+							url : true
+						}
+				},
+				highlight: function(element){
+					$(element).closest('.form-group').removeClass('has-success').addClass('has-error');
+				},
+				unhighlight: function(element){
+					$(element).closest('.form-group').removeClass('has-error').addClass('has-success');
+				}
+			}		
+	);
 });
 </script>
 
@@ -88,15 +107,23 @@ $(document).ready(function(){
 			<table class="table table-bordered table-hover table-striped">
 				<thead>
 					<tr>
-						<th>Title</th>
-						<th>Link</th>
+						<th>Date:</th>
+						<th>Item:</th>
 					</tr>
 				</thead>
 				<tbody>
 					<c:forEach items="${blog.items}" var="item">
 						<tr>
-							<td>${item.title}</td>
-							<td>${item.link}</td>
+							<td>${item.publishedDate}</td>
+							<td>
+								<strong>
+								<a href="<c:out value="${item.link}"/>" target="_blank">
+									<c:out value="${item.title}"/>
+								</a>
+								</strong>
+								<br />
+								${item.description}
+							</td>
 
 						</tr>
 					</c:forEach>
