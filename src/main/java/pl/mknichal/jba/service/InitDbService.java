@@ -46,14 +46,14 @@ public class InitDbService {
 			roleRepository.save(roleUser);
 
 			Role roleAdmin = new Role();
-			roleAdmin.setName("ROLE_Admin");
+			roleAdmin.setName("ROLE_ADMIN");
 			roleRepository.save(roleAdmin);
 			
 			User userAdmin = new User();
 			userAdmin.setEnabled(true);
-			userAdmin.setName("administrator");
+			userAdmin.setName("admin");
 			BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-			userAdmin.setPassword(encoder.encode("administrator"));
+			userAdmin.setPassword(encoder.encode("admin"));
 			List<Role> roles = new ArrayList<Role>();
 
 			roles.add(roleAdmin);
